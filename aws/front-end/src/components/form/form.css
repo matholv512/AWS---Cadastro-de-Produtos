@@ -1,0 +1,58 @@
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+input,
+select,
+textarea,
+.radios,
+.checks {
+    margin-bottom: 20px;
+}
+
+label {
+    padding-bottom: 1vh;
+}
+
+span {
+    color: red;
+}
+
+h1 {
+    text-align: center;
+    padding-bottom: 3vh;
+    margin-top: -2vh;
+}
+
+h2 {
+    text-align: center;
+    margin-top: -2vh;
+    margin-bottom: 5vh;
+}
+
+.radios label,
+.checks label {
+    margin-right: 20px;
+}
+
+
+#imgLogo {
+    width: 20vh;
+    display: flex;
+    margin: 0 auto;
+}
+
+#labelAte {
+    margin-left: 2vh;
+}
+
+#labelGenero {
+    margin-left: 4vh;
+}
+
+#buttonUpload {
+    width: 110px;
+    height: 60px;
+    font-size: 13.4px;
+}
