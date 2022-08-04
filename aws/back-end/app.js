@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const multer = require("multer");
+let empresaNome = "ADIDAS";
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,9 @@ const storage = multer.diskStorage({
   filename: function (req, uploadFile, callback) {
     callback(
       null,
-      uploadFile.originalname +
+      empresaNome +
+        "-" +
+        uploadFile.originalname +
         "-" +
         Date.now() +
         path.extname(uploadFile.originalname)
@@ -25,8 +28,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post("/upload", upload.single("uploadFile"), (req, res) => {
-  // res.send("Produto enviado")
+app.post("/upload", upload.array("uploadFile"), (req, res) => {
+  res.send(
+    `<script>window.location.href= "../front-end/src/components/form/form.js"</script>`
+  );
+  // res.send(`<h1>Produto enviado com SUCESSO!!!<h1/>` + `<br/>` + `<h2>Cadastrar novo produto: <h2/>` + `<button type="submit" >Novo<button/>` )
+  // res.send("Produto enviado com sucesso!!!" + `<br/>` + "Cadastrar um novo produto " + `<br/>` + `<button>Novo<button/>`)
 });
 
 const produtosRoutes = require("./src/api/routes/produtosRoutes");

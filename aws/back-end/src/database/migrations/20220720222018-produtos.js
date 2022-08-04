@@ -57,10 +57,6 @@ module.exports = {
         type: Sequelize.STRING(60),
         allowNull: true,
       },
-      uploadFile: {
-        type: Sequelize.STRING(60),
-        allowNull: false,
-      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

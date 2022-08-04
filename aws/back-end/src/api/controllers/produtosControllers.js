@@ -14,21 +14,33 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { prod_codigo, prod_nome, prod_cor, prod_genero, prod_marca, prod_descricao, prod_tamanhode, prod_tamanhoate, prod_material_externo,
-      prod_material_interno, prod_material_solado, prod_fechamento } = req.body;
-    const produtos = await Produtos.create({
-      prod_codigo, 
-      prod_nome, 
-      prod_cor, 
+    const {
+      prod_codigo,
+      prod_nome,
+      prod_cor,
       prod_genero,
       prod_marca,
-      prod_descricao, 
-      prod_tamanhode, 
+      prod_descricao,
+      prod_tamanhode,
       prod_tamanhoate,
       prod_material_externo,
-      prod_material_interno, 
-      prod_material_solado, 
-      prod_fechamento
+      prod_material_interno,
+      prod_material_solado,
+      prod_fechamento,
+    } = req.body;
+    const produtos = await Produtos.create({
+      prod_codigo,
+      prod_nome,
+      prod_cor,
+      prod_genero,
+      prod_marca,
+      prod_descricao,
+      prod_tamanhode,
+      prod_tamanhoate,
+      prod_material_externo,
+      prod_material_interno,
+      prod_material_solado,
+      prod_fechamento,
     });
     return res.status(200).send({
       status: 1,
@@ -39,21 +51,34 @@ module.exports = {
 
   async update(req, res) {
     const { produtos_id } = req.params;
-    const { prod_codigo, prod_nome, prod_cor, prod_genero, prod_marca, prod_descricao, prod_tamanhode, prod_tamanhoate, prod_material_externo,
-      prod_material_interno, prod_material_solado, prod_fechamento } = req.body;
-    await Produtos.update({
-      prod_codigo, 
-      prod_nome, 
-      prod_cor, 
+    const {
+      prod_codigo,
+      prod_nome,
+      prod_cor,
       prod_genero,
       prod_marca,
-      prod_descricao, 
-      prod_tamanhode, 
+      prod_descricao,
+      prod_tamanhode,
       prod_tamanhoate,
       prod_material_externo,
-      prod_material_interno, 
-      prod_material_solado, 
-      prod_fechamento
+      prod_material_interno,
+      prod_material_solado,
+      prod_fechamento,
+    } = req.body;
+    await Produtos.update(
+      {
+        prod_codigo,
+        prod_nome,
+        prod_cor,
+        prod_genero,
+        prod_marca,
+        prod_descricao,
+        prod_tamanhode,
+        prod_tamanhoate,
+        prod_material_externo,
+        prod_material_interno,
+        prod_material_solado,
+        prod_fechamento,
       },
       {
         where: {
@@ -81,5 +106,4 @@ module.exports = {
       },
     });
   },
-  
-}; 
+};

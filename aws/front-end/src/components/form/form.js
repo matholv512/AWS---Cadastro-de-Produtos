@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "../form/form.css";
 import imgLogo from "../../img/logo-web-seo/Agência Web SEO 4.png";
-import FileUpload from "../fileupload/fileUpload";
 
 function Form() {
   const [formValues, setFormValues] = useState({
@@ -16,7 +15,7 @@ function Form() {
     prod_tamanhode: "33",
     prod_tamanhoate: "44",
     prod_fechamento: "",
-    materialsolado: "",
+    prod_material_solado: "",
   });
 
   const handleInputChange = (e) => {
@@ -24,23 +23,52 @@ function Form() {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    // e.preventDefault()
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+  // const handleSubmit = (e) => {
+  //   // e.preventDefault()
+  //   const formData = new FormData(e.target);
+  //   const data = Object.fromEntries(formData);
 
+  //   fetch("http://localhost:3000/produtos", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   });
+  // };
+
+  function handleClick() {
     fetch("http://localhost:3000/produtos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-  };
+      body: JSON.stringify(formValues),
+    })
+      .then((json) => json.json())
+      .then((result) => {
+        setFormValues(result.data);
+      });
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
+    // <form onSubmit={handleSubmit}>
+    <form method="post" encType="multipart/form-data" action="/upload">
       <a href="https://agenciawebseo.com.br/">
         <img id="imgLogo" src={imgLogo} alt="LOGO-AgenciaWebSEO"></img>
       </a>
+
+      <label id="labelEmpresa">
+        Empresa <span>*</span>
+        <select
+          required
+          name="empresa"
+          onChange={handleInputChange}
+          value={formValues.empresa}
+        >
+          <option value="Torrenezzi">Torrenezzi</option>
+          <option value="RosaHelena">Rosa Helena</option>
+          <option value="Viines">Viines</option>
+          <option value="Bionda">Bionda</option>
+          <option value="Kauki">Kauki</option>
+        </select>
+      </label>
 
       <label>
         Código (SKU) <span>*</span>
@@ -82,19 +110,6 @@ function Form() {
       </label>
 
       <label>
-        Descrição <span>*</span>
-        <textarea
-          required
-          cols="74"
-          rows="10"
-          name="prod_descricao"
-          placeholder="Exemplo: Marca, modelo, garantia..."
-          onChange={handleInputChange}
-          value={formValues.prod_descricao || ""}
-        ></textarea>
-      </label>
-
-      <label>
         Cor <span>*</span>
         <select
           required
@@ -128,6 +143,8 @@ function Form() {
           <option value="VerdeEscuro">Verde Escuro</option>
         </select>
       </label>
+
+      <br />
 
       <label id="labelGenero">
         Gênero <span>*</span>
@@ -251,6 +268,19 @@ function Form() {
         </label>
       </label>
 
+      <label>
+        Descrição <span>*</span>
+        <textarea
+          required
+          cols="74"
+          rows="10"
+          name="prod_descricao"
+          placeholder="Exemplo: Marca, modelo, garantia..."
+          onChange={handleInputChange}
+          value={formValues.prod_descricao || ""}
+        ></textarea>
+      </label>
+
       <br />
       <label>
         Material externo
@@ -282,11 +312,11 @@ function Form() {
         Material do Solado
         <input
           type="text"
-          name="materialsolado"
+          name="prod_material_solado"
           size="70"
           placeholder="Exemplo: Sintético, TR, etc"
           onChange={handleInputChange}
-          value={formValues.materialsolado || ""}
+          value={formValues.prod_material_solado || ""}
         ></input>
       </label>
 
@@ -302,10 +332,28 @@ function Form() {
         ></input>
       </label>
 
-      <FileUpload />
+      <label>
+        Upload de Arquivo <span>*</span>
+        <br />
+        <span> .zip, .rar, .7zip</span>
+      </label>
+      <label id="uploadLabel">
+        Selecione o Arquivo
+        <input
+          required
+          id="uploadFile"
+          name="uploadFile"
+          type="file"
+          accept=".zip,.rar,.7zip"
+        />
+      </label>
 
       <br />
-      <button type="submit">Finalizar Produto</button>
+      <div id="div-enviar">
+        <button onClick={handleClick} type="submit">
+          Enviar
+        </button>
+      </div>
     </form>
   );
 }
