@@ -14,6 +14,7 @@ module.exports = {
   },
 
   async store(req, res) {
+    const { produtos_id } = req.params;
     const {
       prod_codigo,
       prod_nome,
@@ -41,7 +42,13 @@ module.exports = {
       prod_material_interno,
       prod_material_solado,
       prod_fechamento,
+    }, 
+    {
+        where: {
+          id: produtos_id,
+        },
     });
+    
     return res.status(200).send({
       status: 1,
       message: "Produto cadastrado com sucesso!",
