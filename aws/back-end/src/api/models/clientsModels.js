@@ -116,12 +116,12 @@ class Clients extends Model {
         client_custom_field_69: DataTypes.STRING, 
         client_custom_field_70: DataTypes.STRING,
         createdAt: {
-          field: 'createdAt',
+          field: 'client_created',
           type: DataTypes.DATE,
           allowNull: false,
         },
         updatedAt: {
-          field: 'updatedAt',
+          field: 'client_updated',
           type: DataTypes.DATE,
           allowNull: false,
         },
@@ -130,7 +130,6 @@ class Clients extends Model {
         sequelize,
         tableName: "clients",
       },
-      // options
    
       
     );
