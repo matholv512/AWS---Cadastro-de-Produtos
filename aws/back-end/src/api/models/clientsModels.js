@@ -130,8 +130,6 @@ class Clients extends Model {
         sequelize,
         tableName: "clients",
       },
-   
-      
     );
     return this;
   }

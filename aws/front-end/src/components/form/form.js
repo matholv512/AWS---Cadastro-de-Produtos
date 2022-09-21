@@ -1,10 +1,10 @@
 import { useState, useEffect, react } from "react";
 import "../form/form.css";
-import imgLogo from "../../img/logo-web-seo/Agência Web SEO 4.png";
+import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
 
 function Form() {
   function pegaParam() {
-    let query = window.location.href;
+    let query = window.location.href; // trocar para -> window.history.previous.href
     let parametro = query.split("?");
     let partes = parametro[1];
     let pt2 = partes.split("=");
@@ -36,7 +36,7 @@ function Form() {
   };
 
   function handleClick() {
-    fetch("http://localhost:3000/produtos/"+ id, {
+    fetch("http://localhost:3000/produtos/" + id, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formValues),
