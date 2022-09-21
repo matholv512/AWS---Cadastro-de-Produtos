@@ -21,8 +21,9 @@ module.exports = {
     return res.json(produtos);
   },
 
-  async store(req, res) {
-    const { client_id } = req.params;
+
+
+async store(req, res) {
     const {
       prod_codigo,
       prod_nome,
@@ -66,6 +67,7 @@ module.exports = {
 
     return res.json(produtos);
   },
+
 
   async update(req, res) {
     const { produtos_id } = req.params;
