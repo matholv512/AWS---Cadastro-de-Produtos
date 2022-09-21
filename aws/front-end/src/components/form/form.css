@@ -36,8 +36,11 @@ h2 {
     margin-right: 20px;
 }
 
-
 #imgLogo {
+    margin: -3vh;
+}
+
+#linkLogo{
     width: 20vh;
     display: flex;
     margin: 0 auto;
@@ -57,7 +60,8 @@ input[type="file"] {
 
 #uploadLabel {
     padding: 10px 30px;
-    /* width: 40vh; */
+    /* width: 74vh;  */
+    width: 485px; 
     border-radius: 5px;
     background-color: #D0CFCF;
     color: #FFF;
@@ -74,4 +78,5 @@ input[type="file"] {
 
 #div-enviar {
     text-align: center;
+    margin-left: -40px;
 }

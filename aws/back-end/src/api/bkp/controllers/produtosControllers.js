@@ -1,6 +1,6 @@
 const Produtos = require("../models/produtosModels");
 const Clients = require("../models/clientsModels");
-const { update } = require("./clientsControllers");
+const { update } = require("./clientsControllers.js");
 
 module.exports = {
   async indexAll(req, res) {
@@ -10,7 +10,7 @@ module.exports = {
 
   async index(req, res) {
     const { client_id } = req.params;
-    console.log("Parametro cliente esperado " + client_id);
+    console.log("Parametro de produto esperado " + client_id);
 
     const produtos = await Clients.findByPk(client_id, {
       include: {
@@ -41,15 +41,14 @@ module.exports = {
     console.log("Parametro esperado: " + client_id);
     console.log("Dados: " + req.body);
 
-    const clients = await Clients.findByPk(client_id);
+    const client = await Clients.findByPk(client_id);
 
-    if (!clients) {
+    if (!client) {
       return res.status(400).json({
-        error: "cliente não encontrado!",
+        error: "Cliente não encontrado!",
       });
     }
     const produtos = await Produtos.create({
-      client_id,
       prod_codigo,
       prod_nome,
       prod_cor,
@@ -70,7 +69,6 @@ module.exports = {
   async update(req, res) {
     const { produtos_id } = req.params;
     const {
-      client_id,
       prod_codigo,
       prod_nome,
       prod_cor,
@@ -87,19 +85,18 @@ module.exports = {
 
     await Produtos.update(
       {
-        client_id,
-        prod_codigo,
-        prod_nome,
-        prod_cor,
-        prod_genero,
-        prod_marca,
-        prod_descricao,
-        prod_tamanhode,
-        prod_tamanhoate,
-        prod_material_externo,
-        prod_material_interno,
-        prod_material_solado,
-        prod_fechamento,
+      prod_codigo,
+      prod_nome,
+      prod_cor,
+      prod_genero,
+      prod_marca,
+      prod_descricao,
+      prod_tamanhode,
+      prod_tamanhoate,
+      prod_material_externo,
+      prod_material_interno,
+      prod_material_solado,
+      prod_fechamento,
       },
       {
         where: {
@@ -121,7 +118,7 @@ module.exports = {
     if (!produtos) {
       return res.status(400).json({ error: "Produto não encontrado!" });
     } else {
-      console.log("Produto encontrado!");
+      console.log("produto encontrado!");
     }
 
     await Produtos.destroy({
@@ -132,7 +129,7 @@ module.exports = {
 
     return res.status(200).send({
       status: 1,
-      message: "Produto deletados com sucesso!",
+      message: "Produtos deletados com sucesso!",
       produtos,
     });
   },

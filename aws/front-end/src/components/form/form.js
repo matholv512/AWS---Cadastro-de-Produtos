@@ -1,8 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, react } from "react";
 import "../form/form.css";
 import imgLogo from "../../img/logo-web-seo/Agência Web SEO 4.png";
 
 function Form() {
+  function pegaParam() {
+    let query = window.location.href;
+    let parametro = query.split("?");
+    let partes = parametro[1];
+    let pt2 = partes.split("=");
+    let id = pt2[1];
+
+    return id;
+  }
+
+  let id = pegaParam();
+
   const [formValues, setFormValues] = useState({
     prod_codigo: "",
     prod_nome: "",
@@ -23,20 +35,8 @@ function Form() {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // const handleSubmit = (e) => {
-  //   // e.preventDefault()
-  //   const formData = new FormData(e.target);
-  //   const data = Object.fromEntries(formData);
-
-  //   fetch("http://localhost:3000/produtos", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   });
-  // };
-
   function handleClick() {
-    fetch("http://localhost:3000/produtos", {
+    fetch("http://localhost:3000/produtos/"+ id, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formValues),
@@ -44,31 +44,20 @@ function Form() {
       .then((json) => json.json())
       .then((result) => {
         setFormValues(result.data);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   }
 
   return (
     // <form onSubmit={handleSubmit}>
     <form method="post" encType="multipart/form-data" action="/upload">
-      <a href="https://agenciawebseo.com.br/">
+      <a id="linkLogo" href="https://agenciawebseo.com.br/">
         <img id="imgLogo" src={imgLogo} alt="LOGO-AgenciaWebSEO"></img>
       </a>
 
-      <label id="labelEmpresa">
-        Empresa <span>*</span>
-        <select
-          required
-          name="empresa"
-          onChange={handleInputChange}
-          value={formValues.empresa}
-        >
-          <option value="Torrenezzi">Torrenezzi</option>
-          <option value="RosaHelena">Rosa Helena</option>
-          <option value="Viines">Viines</option>
-          <option value="Bionda">Bionda</option>
-          <option value="Kauki">Kauki</option>
-        </select>
-      </label>
+      <br />
 
       <label>
         Código (SKU) <span>*</span>
@@ -84,7 +73,7 @@ function Form() {
       </label>
 
       <label>
-        Nome do produto <span>*</span>
+        Nome <span>*</span>
         <input
           required
           type="text"
@@ -350,7 +339,13 @@ function Form() {
 
       <br />
       <div id="div-enviar">
-        <button onClick={handleClick} type="submit">
+        <button
+          onClick={() => {
+            pegaParam();
+            handleClick();
+          }}
+          type="submit"
+        >
           Enviar
         </button>
       </div>
