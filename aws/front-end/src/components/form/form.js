@@ -14,7 +14,6 @@ function Form(props) {
   }
 
   let id = pegaParam();
-  
 
   const [formValues, setFormValues] = useState({
     prod_codigo: "",
@@ -25,26 +24,26 @@ function Form(props) {
     prod_descricao: "",
     prod_material_externo: "",
     prod_material_interno: "",
-    prod_tamanhode: "33",
-    prod_tamanhoate: "44",
+    prod_tamanhode: "",
+    prod_tamanhoate: "",
     prod_fechamento: "",
     prod_material_solado: "",
   });
 
-  const [components, setComponents] = useState()
+  const [cores, setCores] = useState(['Selecionar', 'Azul','Amarelo', 'Preto'])
+
+  const [components, setComponents] = useState();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    console.log(components)
+    console.log(components);
   };
-  
+
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/produtos/`
-        );
+        const response = await fetch(`http://localhost:3000/produtos/`);
         if (!response.ok) {
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`
@@ -52,12 +51,12 @@ function Form(props) {
         }
         let actualData = await response.json();
         setComponents(actualData);
-      } catch(err) {
+      } catch (err) {
         setComponents(null);
       }
-    }
-    getData()
-  }, [])
+    };
+    getData();
+  }, []);
 
   function handleClick() {
     fetch("http://localhost:3000/produtos/" + id, {
@@ -74,9 +73,29 @@ function Form(props) {
       });
   }
 
+
+  
+  //add field
+  const [val,setVal]=useState([]);
+   const handleAdd=()=>{
+       const abc=[...val,[]]
+       setVal(abc)
+   }
+   const handleChange=(onChangeValue,i)=>{
+    const inputdata=[...val]
+    inputdata[i]=onChangeValue.target.value;
+    setVal(inputdata)
+   }
+   const handleDelete=(i)=>{
+       const deletVal=[...val]
+       deletVal.splice(i,1)
+       setVal(deletVal)  
+   }
+   console.log(val,"data-")
+
   return (
     // <form onSubmit={handleSubmit}>
-    <form method="post" encType="multipart/form-data" action="/upload">
+    <form method="post" encType="multipart/form-data" action="/upload" className="formPrincipal">
       <a id="linkLogo" href="https://agenciawebseo.com.br/">
         <img id="imgLogo" src={imgLogo} alt="LOGO-AgenciaWebSEO"></img>
       </a>
@@ -131,6 +150,7 @@ function Form(props) {
           name="prod_cor"
           onChange={handleInputChange}
           value={formValues.prod_cor}
+          id="cor"
         >
           <option value="Amarelo">Amarelo</option>
           <option value="AmareloClaro">Amarelo Claro</option>
@@ -159,6 +179,22 @@ function Form(props) {
         </select>
       </label>
 
+      <button onClick={()=>handleAdd()}>+</button>
+        {val?.map((data,i)=>{
+            return(
+               <div  className="divCor">
+                
+                    <select>
+                      {cores?.map((c) => {
+                        return <option value={data} onChange={e=>handleChange(e,i)}>{c}</option> 
+                      })}
+                      
+                    </select> 
+                    <button id="btn-del-cor" onClick={()=>handleDelete(i)}>-</button>
+               </div>
+            )
+        })}
+
       <br />
 
       <label id="labelGenero">
@@ -168,6 +204,7 @@ function Form(props) {
           name="prod_genero"
           onChange={handleInputChange}
           value={formValues.prod_genero}
+          id="input_genero"
         >
           <option value="Masculino">Masculino</option>
           <option value="Feminino">Feminino</option>
@@ -370,6 +407,7 @@ function Form(props) {
             pegaParam();
             handleClick();
           }}
+          id="btn-enviar"
           type="submit"
         >
           Enviar

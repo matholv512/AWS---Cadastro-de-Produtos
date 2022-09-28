@@ -7,8 +7,8 @@ form {
 
 h1 {
     padding-top: 2vh;
-    font-size: 3.4vh;
-    text-align: center;
+    font-size: 3vh;
+    text-align: left;
     
 }
 
@@ -44,9 +44,10 @@ h2 {
 }
 
 #linkLogo{
-    width: 20vh;
+    width: 16vh;
     display: flex;
     margin: 0 auto;
+    margin-top: 1.95vh;
 }
 
 #labelAte {
@@ -66,7 +67,8 @@ input[type="file"] {
     /* width: 74vh;  */
     width: 485px; 
     border-radius: 5px;
-    background-color: #D0CFCF;
+    /* background-color: #D0CFCF; */
+    background-color: #06A0E8;
     color: #FFF;
     text-transform: uppercase;
     text-align: center;
@@ -82,4 +84,32 @@ input[type="file"] {
 #div-enviar {
     text-align: center;
     margin-left: -40px;
+}
+
+#btn-enviar {
+    background-color: #06A0E8;
+    color: white;
+}
+
+/* #labelGenero {
+    margin-left: 5vh;
+} */
+
+
+
+/* .divCor {
+    background-color: red;
+} */ */
+
+
+
+#btn-del-cor {
+    width: 1px;
+    background-color: red;
+}
+
+.formPrincipal {
+    border: 1px solid #06A0E8;
+    border-radius: 2vh;
+    padding: 5vh;
 }
