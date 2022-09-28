@@ -17,6 +17,8 @@ class Produtos extends Model {
         prod_material_interno: DataTypes.STRING,
         prod_material_solado: DataTypes.STRING,
         prod_fechamento: DataTypes.STRING,
+        prod_status: DataTypes.STRING,
+        prod_ativo_inativo: DataTypes.STRING,
       },
       {
         sequelize,

@@ -36,6 +36,8 @@ module.exports = {
       prod_material_interno,
       prod_material_solado,
       prod_fechamento,
+      prod_status,
+      prod_ativo_inativo,
     } = req.body;
 
     console.log("Parametro esperado: " + client_id);
@@ -62,6 +64,8 @@ module.exports = {
       prod_material_interno,
       prod_material_solado,
       prod_fechamento,
+      prod_status,
+      prod_ativo_inativo,
     });
 
     return res.json(produtos);
@@ -83,6 +87,8 @@ module.exports = {
       prod_material_interno,
       prod_material_solado,
       prod_fechamento,
+      prod_status,
+      prod_ativo_inativo,
     } = req.body;
 
     await Produtos.update(
@@ -100,6 +106,8 @@ module.exports = {
         prod_material_interno,
         prod_material_solado,
         prod_fechamento,
+        prod_status,
+        prod_ativo_inativo,
       },
       {
         where: {

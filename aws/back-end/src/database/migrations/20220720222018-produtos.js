@@ -64,6 +64,15 @@ module.exports = {
         type: Sequelize.STRING(60),
         allowNull: true,
       },
+      prod_ativo_inativo: {
+        type: Sequelize.STRING(30),
+        
+        allowNull: true,
+      },
+      prod_status: {
+        type: Sequelize.STRING(30),
+        allowNull: true,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

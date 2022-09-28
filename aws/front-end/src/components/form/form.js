@@ -2,7 +2,7 @@ import { useState, useEffect, react } from "react";
 import "../form/form.css";
 import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
 
-function Form() {
+function Form(props) {
   function pegaParam() {
     let query = window.location.href; // trocar para -> window.history.previous.href
     let parametro = query.split("?");
@@ -14,6 +14,7 @@ function Form() {
   }
 
   let id = pegaParam();
+  
 
   const [formValues, setFormValues] = useState({
     prod_codigo: "",
@@ -30,10 +31,33 @@ function Form() {
     prod_material_solado: "",
   });
 
+  const [components, setComponents] = useState()
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    console.log(components)
   };
+  
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/produtos/`
+        );
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        let actualData = await response.json();
+        setComponents(actualData);
+      } catch(err) {
+        setComponents(null);
+      }
+    }
+    getData()
+  }, [])
 
   function handleClick() {
     fetch("http://localhost:3000/produtos/" + id, {
@@ -59,6 +83,8 @@ function Form() {
 
       <br />
 
+      <h1>Cadastro de produtos</h1>
+
       <label>
         Código (SKU) <span>*</span>
         <input
@@ -66,7 +92,7 @@ function Form() {
           type="text"
           name="prod_codigo"
           size="70"
-          placeholder="Exemplo: 408"
+          placeholder="SKU do produto"
           onChange={handleInputChange}
           value={formValues.prod_codigo || ""}
         />
@@ -79,7 +105,7 @@ function Form() {
           type="text"
           name="prod_nome"
           size="70"
-          placeholder="Exemplo: Tênis Masculino Slip On"
+          placeholder="Nome do produto"
           onChange={handleInputChange}
           value={formValues.prod_nome || ""}
         ></input>
@@ -92,7 +118,7 @@ function Form() {
           type="text"
           name="prod_marca"
           size="70"
-          placeholder="Exemplo: Adidas"
+          placeholder="Marca do produto"
           onChange={handleInputChange}
           value={formValues.prod_marca || ""}
         ></input>
@@ -264,7 +290,7 @@ function Form() {
           cols="74"
           rows="10"
           name="prod_descricao"
-          placeholder="Exemplo: Marca, modelo, garantia..."
+          placeholder="Descrição do produto"
           onChange={handleInputChange}
           value={formValues.prod_descricao || ""}
         ></textarea>
@@ -277,7 +303,7 @@ function Form() {
           type="text"
           name="prod_material_externo"
           size="70"
-          placeholder="Exemplo: Couro, Sintético, etc"
+          placeholder="Material externo do produto"
           onChange={handleInputChange}
           value={formValues.prod_material_externo || ""}
         ></input>
@@ -291,7 +317,7 @@ function Form() {
           type="text"
           name="prod_material_interno"
           size="70"
-          placeholder="Exemplo: têxtil, etc"
+          placeholder="Material interno do produto"
           onChange={handleInputChange}
           value={formValues.prod_material_interno || ""}
         ></input>
@@ -303,7 +329,7 @@ function Form() {
           type="text"
           name="prod_material_solado"
           size="70"
-          placeholder="Exemplo: Sintético, TR, etc"
+          placeholder="Material de solado do produto"
           onChange={handleInputChange}
           value={formValues.prod_material_solado || ""}
         ></input>
@@ -315,7 +341,7 @@ function Form() {
           type="text"
           name="prod_fechamento"
           size="70"
-          placeholder="Exemplo: Cadarço, Elastico etc"
+          placeholder="Material de fechamento do produto"
           onChange={handleInputChange}
           value={formValues.prod_fechamento || ""}
         ></input>
