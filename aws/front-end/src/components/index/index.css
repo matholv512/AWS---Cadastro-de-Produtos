@@ -13,6 +13,10 @@ th {
 }
 
 .btn-cadastrar {
-    background-color: rgb(37, 207, 37);
+    background-color: rgb(42, 187, 42);
     color: white;
+}
+
+.teste {
+    background-color: red;
 }

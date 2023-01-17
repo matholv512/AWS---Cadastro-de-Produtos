@@ -27,7 +27,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post("/upload", upload.array("uploadFile"), (req, res) => {
-  res.send(`<script>window.location.href=document.referrer</script>`);  
+  // res.send(`<script>window.location.href=document.referrer</script>`);  
+  // res.send(window.location.assign("http://localhost:3001"));  
+  res.redirect(301, 'http://localhost:3001/');
 });
 
 const produtosRoutes = require("./src/api/routes/produtosRoutes");

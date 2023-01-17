@@ -1,15 +1,21 @@
 import { useState, useEffect, react } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import "../form/form.css";
 import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
 import "../index/index.css";
-import Form from "../form/form";
 
-export default function Main(props) {
+//https://www.youtube.com/watch?v=MY6ZZIn93V8
+//https://www.youtube.com/watch?v=MY6ZZIn93V8
+//https://www.youtube.com/watch?v=MY6ZZIn93V8
+//https://www.youtube.com/watch?v=MY6ZZIn93V8
+
+export default function Main() {
   const navigate = useNavigate();
-  let id = props.id;
   const [allProduct, setAllProduct] = useState([]);
+  let id = 12; 
 
+  // busca total
   useEffect(() => {
     const getData = async () => {
       try {
@@ -31,6 +37,16 @@ export default function Main(props) {
   return (
     <div>
       <h3>Buscar produtos</h3>
+
+      {/* <ul className="list">
+        {allProduct.filter((asd) =>
+          asd.first_name.toLowerCase().includes(query)
+        ).map((produto) => (
+           <li className="listItem" key={produto.id}>
+            {produto.prod_nome}
+           </li>
+         ))}
+       </ul> */}
 
       <label>
         SKU
@@ -121,17 +137,26 @@ export default function Main(props) {
           <th scope="col">Nome</th>
           <th scope="col">Marca</th>
           <th scope="col">Ativo/Invativo</th>
-          <th scope="col">Status</th> 
-          <th scope="col">Ação</th> 
+          <th scope="col">Status</th>
+          <th scope="col">Ação</th>
         </thead>
         <tbody>
           {allProduct?.map((p) => {
             return (
-              <tr scope="row">
-                <td>{p.prod_codigo}</td>  <td>{p.prod_nome}</td>  <td>{p.prod_marca}</td>
-               
+              <tr scope="row" key={p.id}>
+                <td>{p.prod_codigo}</td>
+                <td>{p.prod_nome}</td>
+                <td>{p.prod_marca}</td>
+                <td>{p.prod_ativo_inativo}</td>
+                <td>{p.prod_status}</td>
                 <td>
-                
+                  <span
+                    onClick={() => {
+                      navigate("/editar-produtos/?id=" + id);
+                    }}
+                  >
+                    editar
+                  </span>
                 </td>
               </tr>
             );

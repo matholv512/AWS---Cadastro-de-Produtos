@@ -40,7 +40,8 @@ h2 {
 }
 
 #imgLogo {
-    margin: -7vh;
+   border: 1px solid #06A0E8;
+   border-radius: 10vh;
 }
 
 #linkLogo{

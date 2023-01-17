@@ -1,10 +1,11 @@
 import { useState, useEffect, react } from "react";
 import "../form/form.css";
 import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
+import "../index/index";
 
-function Form(props) {
+function Form() {
   function pegaParam() {
-    let query = window.location.href; // trocar para -> window.history.previous.href
+    let query = window.window.location.href; // trocar para -> window.history.previous.href
     let parametro = query.split("?");
     let partes = parametro[1];
     let pt2 = partes.split("=");
@@ -30,11 +31,19 @@ function Form(props) {
     prod_material_solado: "",
   });
 
-  const [cores, setCores] = useState(['Selecionar', 'Azul','Amarelo', 'Preto'])
+  const [cores, setCores] = useState([
+    "Selecionar",
+    "Azul",
+    "Amarelo",
+    "Preto",
+  ]);
+
+  const [corSelecionada, setcorSelecionada] = useState([])
 
   const [components, setComponents] = useState();
 
   const handleInputChange = (e) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     console.log(components);
@@ -73,30 +82,36 @@ function Form(props) {
       });
   }
 
-
-  
   //add field
-  const [val,setVal]=useState([]);
-   const handleAdd=()=>{
-       const abc=[...val,[]]
-       setVal(abc)
-   }
-   const handleChange=(onChangeValue,i)=>{
-    const inputdata=[...val]
-    inputdata[i]=onChangeValue.target.value;
-    setVal(inputdata)
-   }
-   const handleDelete=(i)=>{
-       const deletVal=[...val]
-       deletVal.splice(i,1)
-       setVal(deletVal)  
-   }
-   console.log(val,"data-")
+  let valores = ''
+  const [val, setVal] = useState([]);
+  const handleAdd = () => {
+    const abc = [...val, []];
+    setVal(abc);
+  };
+  const handleChange = (onChangeValue, i) => {
+    const inputdata = [...val];
+    inputdata[i] = onChangeValue.target.value;
+    setVal(inputdata);
+    valores = onChangeValue.target.value;
+    setcorSelecionada(valores)
+  };
+  const handleDelete = (i) => {
+    const deletVal = [...val];
+    deletVal.splice(i, 1);
+    setVal(deletVal);
+  };
+  console.log(val, "data-");
 
   return (
     // <form onSubmit={handleSubmit}>
-    <form method="post" encType="multipart/form-data" action="/upload" className="formPrincipal">
-      <a id="linkLogo" href="https://agenciawebseo.com.br/">
+    <form
+      method="post"
+      encType="multipart/form-data"
+      action="/upload"
+      className="formPrincipal"
+    >
+      <a id="linkLogo" href="http://localhost:3001/">
         <img id="imgLogo" src={imgLogo} alt="LOGO-AgenciaWebSEO"></img>
       </a>
 
@@ -179,21 +194,25 @@ function Form(props) {
         </select>
       </label>
 
-      <button onClick={()=>handleAdd()}>+</button>
-        {val?.map((data,i)=>{
-            return(
-               <div  className="divCor">
-                
-                    <select>
-                      {cores?.map((c) => {
-                        return <option value={data} onChange={e=>handleChange(e,i)}>{c}</option> 
-                      })}
-                      
-                    </select> 
-                    <button id="btn-del-cor" onClick={()=>handleDelete(i)}>-</button>
-               </div>
-            )
-        })}
+      <button type="button" onClick={() => handleAdd()}>+</button>
+      {val?.map((data, i) => {
+        return (
+          <div className="divCor">
+            <select>
+              {cores?.map((c) => {
+                return (
+                  <option value={data} onChange={(e) => handleChange(e, i)}>
+                    {c} 
+                  </option>
+                );
+              })}
+            </select>
+            <button type="button" id="btn-del-cor" onClick={() => handleDelete(i)}>
+              -
+            </button>
+          </div>
+        );
+      })}
 
       <br />
 
@@ -401,7 +420,11 @@ function Form(props) {
       </label>
 
       <br />
+
+      
       <div id="div-enviar">
+      {/* <button>voltar</button> */}
+
         <button
           onClick={() => {
             pegaParam();
@@ -413,6 +436,7 @@ function Form(props) {
           Enviar
         </button>
       </div>
+      {console.log("ABLUBLUBLÉ" + valores)}
     </form>
   );
 }
