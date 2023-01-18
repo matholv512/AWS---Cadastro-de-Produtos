@@ -3,7 +3,7 @@ const dbConfig = require("../config/database.js");
 
 const conexao = new Sequelize(dbConfig);
 
-const produtos = require("../api/models/produtosModels");
+const produtos = require("../api/models/productModels");
 const clients = require("../api/models/clientsModels");
 
 try {

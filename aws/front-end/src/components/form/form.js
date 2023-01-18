@@ -4,8 +4,8 @@ import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
 import "../index/index";
 
 function Form() {
-  function pegaParam() {
-    let query = window.window.location.href; // trocar para -> window.history.previous.href
+  function getParams() {
+    let query = window.window.location.href; // window.history.previous.href
     let parametro = query.split("?");
     let partes = parametro[1];
     let pt2 = partes.split("=");
@@ -14,7 +14,7 @@ function Form() {
     return id;
   }
 
-  let id = pegaParam();
+  let id = getParams();
 
   const [formValues, setFormValues] = useState({
     prod_codigo: "",
@@ -31,7 +31,7 @@ function Form() {
     prod_material_solado: "",
   });
 
-  const [cores, setCores] = useState([
+  const [color, setColors] = useState([
     "Selecionar",
     "Azul",
     "Amarelo",
@@ -199,7 +199,7 @@ function Form() {
         return (
           <div className="divCor">
             <select>
-              {cores?.map((c) => {
+              {color?.map((c) => {
                 return (
                   <option value={data} onChange={(e) => handleChange(e, i)}>
                     {c} 
@@ -427,7 +427,7 @@ function Form() {
 
         <button
           onClick={() => {
-            pegaParam();
+            getParams();
             handleClick();
           }}
           id="btn-enviar"

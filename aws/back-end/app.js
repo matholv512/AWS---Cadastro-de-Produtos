@@ -3,6 +3,14 @@ const http = require("http");
 const cors = require("cors");
 const multer = require("multer");
 
+const produtosRoutes = require("./src/api/routes/productRoutes");
+const clientsRoutes = require("./src/api/routes/clientsRoutes");
+const { patch } = require("./src/api/routes/productRoutes");
+const path = require("path");
+const router = require("./src/api/routes/productRoutes");
+const Produtos = require("./src/api/models/productModels.js");
+const { indexOne } = require("./src/api/controllers/productControllers.js");
+
 const app = express();
 app.use(express.json());
 require("./src/database/indexDb.js");
@@ -27,18 +35,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post("/upload", upload.array("uploadFile"), (req, res) => {
-  // res.send(`<script>window.location.href=document.referrer</script>`);  
-  // res.send(window.location.assign("http://localhost:3001"));  
-  res.redirect(301, 'http://localhost:3001/');
+  res.redirect(301, "http://localhost:3001/");
 });
-
-const produtosRoutes = require("./src/api/routes/produtosRoutes");
-const clientsRoutes = require("./src/api/routes/clientsRoutes");
-const { patch } = require("./src/api/routes/produtosRoutes");
-const path = require("path");
-const router = require("./src/api/routes/produtosRoutes");
-const Produtos = require("./src/api/models/produtosModels.js");
-const { indexOne } = require("./src/api/controllers/produtosControllers.js");
 
 app.use(produtosRoutes);
 app.use(clientsRoutes);
@@ -48,12 +46,8 @@ app.use(cors());
 app.set("url", "http://localhost:");
 app.set("porta", 3000);
 
-
 app.use((req, res, next) => {
-  //Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
   res.header("Access-Control-Allow-Origin", "*");
-  //Quais são os métodos que a conexão pode realizar na API
-  // res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   app.use(cors());
   next();

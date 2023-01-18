@@ -13,6 +13,19 @@ import "../index/index.css";
 export default function Main() {
   const navigate = useNavigate();
   const [allProduct, setAllProduct] = useState([]);
+
+  function getParams() {
+    let query = window.history.previous.href
+    let parametro = query.split("?");
+    let partes = parametro[1];
+    let pt2 = partes.split("=");
+    let id = pt2[1];
+
+    return id;
+  }
+
+  // let id = pegaParam()
+
   let id = 12; 
 
   // busca total

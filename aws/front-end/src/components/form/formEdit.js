@@ -3,7 +3,7 @@ import "../form/form.css";
 import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
 import "../index/index";
 
-function FormEdit(props) {
+function FormEdit() {
   function pegaParam() {
     let query = window.window.location.href; // trocar para -> window.history.previous.href
     let parametro = query.split("?");
