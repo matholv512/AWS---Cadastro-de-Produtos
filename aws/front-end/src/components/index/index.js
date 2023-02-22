@@ -4,18 +4,20 @@ import axios from "axios";
 import "../form/form.css";
 import imgLogo from "../../assets/img/aws-logo/Agência Web SEO 4.png";
 import "../index/index.css";
-
-//https://www.youtube.com/watch?v=MY6ZZIn93V8
-//https://www.youtube.com/watch?v=MY6ZZIn93V8
-//https://www.youtube.com/watch?v=MY6ZZIn93V8
-//https://www.youtube.com/watch?v=MY6ZZIn93V8
+import "bootstrap/dist/css/bootstrap.min.css";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default function Main() {
   const navigate = useNavigate();
   const [allProduct, setAllProduct] = useState([]);
+  const [search, setSearch] = useState("");
 
   function getParams() {
-    let query = window.history.previous.href
+    let query = window.history.previous.href;
     let parametro = query.split("?");
     let partes = parametro[1];
     let pt2 = partes.split("=");
@@ -26,7 +28,16 @@ export default function Main() {
 
   // let id = pegaParam()
 
-  let id = 12; 
+  let id = 12;
+
+  // Filtro de busca
+  const searchLowerCase = search.toLowerCase();
+  const productsFilter = allProduct.filter(
+    (p) =>
+      p.prod_codigo.toLowerCase().includes(searchLowerCase) ||
+      p.prod_nome.toLowerCase().includes(searchLowerCase) ||
+      p.prod_marca.toLowerCase().includes(searchLowerCase)
+  );
 
   // busca total
   useEffect(() => {
@@ -49,133 +60,110 @@ export default function Main() {
 
   return (
     <div>
-      <h3>Buscar produtos</h3>
-
-      {/* <ul className="list">
-        {allProduct.filter((asd) =>
-          asd.first_name.toLowerCase().includes(query)
-        ).map((produto) => (
-           <li className="listItem" key={produto.id}>
-            {produto.prod_nome}
-           </li>
-         ))}
-       </ul> */}
-
-      <label>
-        SKU
-        <input
-          type="text"
-          name="busca_consulta"
-          size="30"
-          placeholder="Código do produto"
-          //   onChange={handleInputChange}
-          //   value={formValues.prod_marca || ""}
-        ></input>
-      </label>
-
-      <label>
-        Nome
-        <input
-          type="text"
-          name="busca_consulta"
-          size="30"
-          placeholder=" Nome do produto "
-          //   onChange={handleInputChange}
-          //   value={formValues.prod_marca || ""}
-        ></input>
-      </label>
-
-      <label>
-        Marca
-        <input
-          type="text"
-          name="busca_consulta"
-          size="30"
-          placeholder="Marca do produto"
-          //   onChange={handleInputChange}
-          //   value={formValues.prod_marca || ""}
-        ></input>
-      </label>
-
-      <label>
-        Ativo / Invativo
-        <select
-          required
-          name="prod_cor"
-          // onChange={handleInputChange}
-          // value={formValues.prod_cor}
-        >
-          <option value="Selecionar">Selecionar</option>
-          <option value="Ativo">Ativo</option>
-          <option value="Inativo">Inativo</option>
-        </select>
-      </label>
-
-      <label>
-        Status
-        <select
-          required
-          name="prod_cor"
-          // onChange={handleInputChange}
-          // value={formValues.prod_cor}
-        >
-          <option value="Selecionar">Selecionar</option>
-          <option value="novo">Novo</option>
-          <option value="em_Andamento">Em Andamento</option>
-          <option value="falha_nas_Informacoes">Falha nas Informações</option>
-          <option value="Catalogado">Catalogado</option>
-        </select>
-      </label>
+      <h3 className="display-5">Listagem de produtos</h3>
 
       <br />
-      <button className="btn-buscar" type="Submit">
-        Buscar
-      </button>
 
-      <button
-        className="btn-cadastrar"
-        type="Submit"
+      <Button
+        id="btn-primary-add-product"
+        variant="primary"
         onClick={() => {
-          navigate("/Cadastro-de-produtos/?id=" + id);
+          navigate("/cadastro-de-produtos/?id=" + id);
         }}
       >
-        Cadastrar Produto
-      </button>
+        Adicionar Produto
+      </Button>
 
-      <h4>Lista de produtos</h4>
+      <br />
+      <br />
 
-      <table class="table">
-        <thead class="table-dark">
-          <th scope="col">SKU</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Marca</th>
-          <th scope="col">Ativo/Invativo</th>
-          <th scope="col">Status</th>
-          <th scope="col">Ação</th>
-        </thead>
-        <tbody>
-          {allProduct?.map((p) => {
-            return (
-              <tr scope="row" key={p.id}>
-                <td>{p.prod_codigo}</td>
-                <td>{p.prod_nome}</td>
-                <td>{p.prod_marca}</td>
-                <td>{p.prod_ativo_inativo}</td>
-                <td>{p.prod_status}</td>
-                <td>
-                  <span
-                    onClick={() => {
-                      navigate("/editar-produtos/?id=" + id);
-                    }}
-                  >
-                    editar
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="divTableIndex">
+        <div className="divInputSearch">
+          <InputGroup className="mb-3">
+            <Form.Control
+              aria-label="search"
+              placeholder="Pesquisar"
+              aria-describedby="basic-addon2"
+              type="search"
+              name="busca_consulta"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </InputGroup>
+        </div>
+
+        <Table striped bordered hover>
+          <thead class="thead-dark">
+            <th scope="col">SKU</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Marca</th>
+            <th scope="col">
+              <Form.Select>
+                <option selected hidden disabled>
+                  Ativo/Inativo
+                </option>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+              </Form.Select>
+            </th>
+
+            <th scope="col">
+              <Form.Select>
+                <option selected hidden disabled>
+                  Status
+                </option>
+                <option value="Novo">Novo</option>
+                <option value="emAndamento">Em andamento</option>
+                <option value="Catalogado">Catalogado</option>
+              </Form.Select>
+            </th>
+            <th scope="col">Ação</th>
+          </thead>
+          <tbody>
+            {productsFilter?.map((p) => {
+              return (
+                <tr scope="row" key={p.id}>
+                  <td>{p.prod_codigo}</td>
+                  <td>{p.prod_nome}</td>
+                  <td>{p.prod_marca}</td>
+                  <td>{p.prod_ativo_inativo}</td>
+                  <td>{p.prod_status}</td>
+                  <td>
+                    <div className="btn-group" role="group">
+                      <ButtonGroup aria-label="Basic example">
+                        <Button
+                          variant="btn btn-primary"
+                          onClick={() => {
+                            navigate("/exibir-produtos/?id=" + id);
+                          }}
+                        >
+                          Exibir
+                        </Button>
+                        <Button
+                          variant="btn btn-secondary"
+                          onClick={() => {
+                            navigate("/editar-produtos/?id=" + id);
+                          }}
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="btn btn-danger"
+                          onClick={() => {
+                            navigate("/deletar-produtos/?id=" + id);
+                          }}
+                        >
+                          Deletar
+                        </Button>
+                      </ButtonGroup>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 }

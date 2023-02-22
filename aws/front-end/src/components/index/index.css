@@ -1,22 +1,16 @@
-label, input, button {
-    margin: 1vh;
+* {
+    padding: .07vh;
+    font-family: Arial, sans-serif;
 }
 
-th {
-    font-weight: bold;
-    /* background-color: #06A0E8; */
+.divTableIndex {
+    text-align: center;
 }
 
-.btn-buscar {
-    background-color: #06A0E8;
-    color: white;
+#btn-primary-add-product {
+    margin-left: 0.12vh;
 }
 
-.btn-cadastrar {
-    background-color: rgb(42, 187, 42);
-    color: white;
-}
-
-.teste {
-    background-color: red;
-}
+/* .display-5 {
+    font-family: Arial, sans-serif;
+} */

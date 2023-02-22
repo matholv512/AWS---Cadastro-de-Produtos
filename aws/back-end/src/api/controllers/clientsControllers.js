@@ -8,7 +8,7 @@ module.exports = {
 
   async index(req, res) {
     const { client_id } = req.params;
-    console.log("Parâmetro advogado esperado " + client_id);
+    console.log("Parâmetro cliente esperado " + client_id);
     const clients = await Clients.findByPk(client_id);
     return res.json(clients);
   },
